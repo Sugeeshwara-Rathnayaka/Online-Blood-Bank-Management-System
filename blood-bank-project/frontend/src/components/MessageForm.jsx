@@ -13,7 +13,7 @@ function MessageForm() {
     try {
       await axios
         .post(
-          "",
+          "http://localhost:4000/api/v1/message/send",
           { firstName, lastName, phone, email, message },
           {
             withCredentials: true,
@@ -31,7 +31,7 @@ function MessageForm() {
           setMessage("");
         });
     } catch (error) {
-      toast.error(error.responce.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
