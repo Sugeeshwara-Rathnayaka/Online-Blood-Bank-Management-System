@@ -69,7 +69,7 @@ const Departments = () => {
       <h2>Department</h2>
       <Carousel
         responsive={responsive}
-        removeArrowOnDeviceType={["mediium,small"]}
+        removeArrowOnDeviceType={["medium", "small"]}
       >
         {departmentsArray.map((depart, index) => {
           return (
