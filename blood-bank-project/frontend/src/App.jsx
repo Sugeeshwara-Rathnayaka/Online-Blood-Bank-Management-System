@@ -8,11 +8,12 @@ import axios from "axios";
 
 import { Context } from "./main";
 import Home from "./pages/Home";
-import Appoinment from "./pages/Appoinment";
+import Appointment from "./pages/Appointment";
 import AboutUs from "./pages/AboutUs";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
@@ -40,12 +41,13 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/appoinment" element={<Appoinment />} />
+          <Route path="/appointment" element={<Appointment />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
         </Routes>
+        <Footer />
         <ToastContainer position="top-center" autoClose={3000} />
       </Router>
     </>
