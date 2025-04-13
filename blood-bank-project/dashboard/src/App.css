@@ -512,6 +512,7 @@ body {
 }
 .add-doctor-form form .first-wrapper div:first-child {
   flex: 1;
+  flex-direction: column;
 }
 .add-doctor-form form .first-wrapper div:first-child img {
   width: 100%;
