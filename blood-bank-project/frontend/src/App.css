@@ -1,4 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap");
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +10,7 @@
   font-family: "Montserrat", sans-serif;
 }
 body {
-  background: #e5e5e5;
+  font-family: Roboto, sans-serif;
 }
 .btn {
   padding: 7px 20px;
@@ -29,9 +32,15 @@ span,
 a {
   font-size: 20px;
 }
+a {
+  text-decoration: none;
+  color: black;
+}
 h1 {
-  font-size: 36px;
-  font-weight: 900;
+  font-family: Roboto, sans-serif;
+  font-size: 10vh;
+  font-weight: 700;
+  color: #333333;
 }
 h1 {
   font-size: 36px;
@@ -149,6 +158,99 @@ h6 {
     }
   }
 }
+/* Login-Register Page */
+.logreg {
+  margin: 30px auto;
+  width: 1300px;
+  height: auto;
+  display: flex;
+  gap: 30px;
+  padding-top: 120px;
+  padding-bottom: 120px;
+  position: relative;
+}
+.logreg .linkbox {
+  width: 50%;
+  height: 500px;
+  background-color: #f3f3f3;
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+@media (max-width: 1186px) {
+  .logreg .linkbox span {
+    right: -400px;
+  }
+  .logreg .linkbox h1 {
+    font-size: 32px;
+  }
+}
+@media (max-width: 1085px) {
+  .logreg .linkbox span {
+    right: -480px;
+    top: -315px;
+  }
+}
+@media (max-width: 925px) {
+  .logreg {
+    flex-direction: column;
+  }
+  @media (max-width: 700px) {
+    .logreg {
+      padding-bottom: 40px;
+    }
+  }
+}
+.center {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 25px;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  color: #333333;
+  padding: 10px;
+}
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+.tile-container {
+  width: 500px;
+  margin: auto;
+  margin-top: 40px;
+}
+.tile {
+  width: 90%;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 10px;
+  font-size: 16px;
+  border-color: #000;
+  border-radius: 5px;
+  text-align: center;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.08);
+  -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.08);
+  -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.08);
+}
+.tile:hover {
+  background-color: #ff6666;
+  transition: background-color 0.3s;
+}
+.fa {
+  font-size: 22px;
+  margin-right: 10px;
+  color: #04a5aa;
+}
+
 .form-component {
   padding-top: 40px;
   padding-bottom: 60px;
@@ -187,7 +289,7 @@ h6 {
   border: 1px solid gray;
 }
 .form-component button {
-  padding: 10px 35px;
+  /* padding: 10px 35px;
   color: #fff;
   font-weight: 700;
   width: fit-content;
@@ -195,8 +297,40 @@ h6 {
   border-radius: 8px;
   font-size: 24px;
   margin-bottom: 30px;
-  background: linear-gradient(140deg, #9083d5, #271776ca);
+  background: linear-gradient(140deg, #9083d5, #271776ca); */
+
+  color: #2b2d42;
+  border: 1px solid #8d99ae;
+  border-radius: 40px;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  padding: 14px;
+  width: 150px;
+  margin: 10px;
 }
+.form-component button:hover {
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: #8d99ae;
+  -webkit-box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.5s;
+  transition: border 0.5s;
+}
+.btn-delete {
+  border: 1px solid #ef233c;
+  color: #ef233c;
+}
+
+.btn-delete:hover {
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: #ef233c;
+}
+
 .form-component .wrapper {
   display: flex;
   gap: 50px;
@@ -581,9 +715,9 @@ input[type="time"]:before {
   color: #444;
   margin-right: 0.5em;
 }
-.logo-img{
+.logo-img {
   width: 150px;
 }
-footer .logo-img{
+footer .logo-img {
   width: 100%;
 }
