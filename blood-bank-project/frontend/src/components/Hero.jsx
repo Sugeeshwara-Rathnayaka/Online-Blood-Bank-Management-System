@@ -6,13 +6,17 @@ function Hero({ title, imageUrl }) {
       <div className="banner">
         <h1>{title}</h1>
         <p>
-          ZeeCare Medical Institute is a state-of-the-art facility dedicated to
-          providing comprehensive healthcare services with compassion and
-          expertise. Our team of skilled professionals is committed to
-          delivering personalized care tailored to each patient's needs. At
-          ZeeCare, we prioritize your well-being, ensuring a harmonious journey
-          towards optimal health and wellness.
+          <b>“Volunteer blood donation”</b> is a safe and simple procedure that
+          involves a donor giving one of the following blood products: whole
+          blood, red blood cells, plasma, or platelets. Overview Volunteers
+          donate all blood products used for transfusions performed in the
+          United States to help people who are ill or injured, or who need blood
+          for other reasons.
         </p>
+
+        <a href="https://www.nhlbi.nih.gov/health-topics/blood-donation">
+          <button className="logoutBtn btn">Read More </button>
+        </a>
       </div>
       <div className="banner">
         <img src={imageUrl} alt="hero" className="animated-image" />
