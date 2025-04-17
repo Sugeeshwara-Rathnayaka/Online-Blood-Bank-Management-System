@@ -24,8 +24,8 @@ const Navbar = () => {
         toast.error(err.response.data.message);
       });
   };
-  const gotoLogin = () => {
-    navigateTo("/login");
+  const gotoLog_reg = () => {
+    navigateTo("/reg_log");
   };
 
   return (
@@ -36,7 +36,7 @@ const Navbar = () => {
       <div className={show ? "navLinks showmenu" : "navLinks"}>
         <div className="links">
           <Link to={"/"}>HOME</Link>
-          <Link to={"/appointment"}>APPOINTMENT</Link>
+          <Link to={"/appointment"}>DONATE US</Link>
           <Link to={"/about"}>ABOUT US</Link>
         </div>
         {isAuthenticated ? (
@@ -44,7 +44,7 @@ const Navbar = () => {
             LOGOUT
           </button>
         ) : (
-          <button className="logoutBtn btn" onClick={gotoLogin}>
+          <button className="logoutBtn btn" onClick={gotoLog_reg}>
             LOGIN
           </button>
         )}
