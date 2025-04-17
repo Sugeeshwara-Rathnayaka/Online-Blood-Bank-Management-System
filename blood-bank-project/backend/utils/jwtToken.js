@@ -1,6 +1,14 @@
 export const generateToken = (user, message, statusCode, res) => {
   const token = user.generateJsonWebToken();
-  const cookieName = user.role === "Admin" ? "adminToken" : "patientToken";
+  //const cookieName = user.role === "Admin" ? "adminToken" : "patientToken";
+  let cookieName = "userToken"; // fallback
+  if (user.role === "SuperAdmin") cookieName = "superAdminToken";
+  else if (user.role === "Admin") cookieName = "adminToken";
+  else if (user.role === "Requester") cookieName = "requesterToken";
+  else if (user.role === "Donor") cookieName = "donorToken";
+  else if (user.role === "Hospital") cookieName = "hospitalToken";
+  else if (user.role === "Organization") cookieName = "organizationToken";
+  else cookieName = "patientToken";
   res
     .status(statusCode)
     .cookie(cookieName, token, {
