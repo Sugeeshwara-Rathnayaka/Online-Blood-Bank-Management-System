@@ -25,6 +25,10 @@ body {
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
 }
+.logo {
+  max-width: 500px;
+  /* max-height: 300px; */
+}
 @media (max-width: 1208px) {
   .page {
     margin-left: 0;

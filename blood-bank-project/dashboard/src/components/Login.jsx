@@ -6,9 +6,8 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(Context);
-  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigateTo = useNavigate();
 
@@ -16,8 +15,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/v1/user/login",
-        { email, password, confirmPassword, role: "Admin" },
+        "http://localhost:4000/api/v1/superAdmin/login",
+        { userName, password },
         {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
@@ -39,26 +38,20 @@ const Login = () => {
     <>
       <div className="container form-component">
         <img src="/logo.png" alt="logo" className="logo" />
-        <h1 className="form-title">WELCOME TO ZEECARE</h1>
-        <p>Only Admins Are Allowed To Access These Resources!</p>
+        <h1 className="form-title">WELCOME TO BLOOD LINK</h1>
+        <p>Only Super Admins Are Allowed To Access These Resources!</p>
         <form onSubmit={handleLogin}>
           <input
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            placeholder="User Name"
           />
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-          />
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm Password"
           />
           <div style={{ justifyContent: "center", alignItems: "center" }}>
             <button type="submit">Login</button>

@@ -15,20 +15,24 @@ import AddNewAdmin from "./components/AddNewAdmin";
 import Sidebar from "./components/Sidebar";
 
 const App = () => {
-  const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
+  const { isAuthenticated, setIsAuthenticated, setUser, setSuperAdmin } =
+    useContext(Context);
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/v1/user/admin/me",
+          "http://localhost:4000/api/v1/superAdmin/me",
           { withCredentials: true }
         );
+        //console.log("response.data:", response.data);
         setIsAuthenticated(true);
         setUser(response.data.user);
+        setSuperAdmin(response.data.superAdmin);
         // eslint-disable-next-line no-unused-vars
       } catch (error) {
         setIsAuthenticated(false);
         setUser({});
+        setSuperAdmin({});
       }
     };
     fetchUser();

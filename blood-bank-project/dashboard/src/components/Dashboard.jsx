@@ -7,7 +7,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
 
 const Dashboard = () => {
-  const { isAuthenticated, user } = useContext(Context);
+  const { isAuthenticated, superAdmin } = useContext(Context);
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const Dashboard = () => {
             <div className="content">
               <div>
                 <p>Hello ,</p>
-                <h5>{user && `${user.firstName} ${user.lastName}`}</h5>
+                <h5>{superAdmin && `${superAdmin?.userName}`}</h5>
               </div>
               <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
