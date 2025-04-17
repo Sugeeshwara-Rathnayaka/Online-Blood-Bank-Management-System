@@ -1,0 +1,24 @@
+import express from "express";
+import {
+  requesterRegister,
+  requesterLogin,
+  updateRequester,
+  deleteRequester,
+  getRequesterDetails,
+  logoutRequester,
+} from "../controller/requesterController.js";
+import {
+  isAdminAuthenticated,
+  isRequesterAuthenticated,
+} from "../middlewares/auth.js";
+
+const router = express.Router();
+
+router.post("/register", requesterRegister);
+router.post("/login", requesterLogin);
+router.get("/me", isRequesterAuthenticated, getRequesterDetails);
+router.get("/logout", isRequesterAuthenticated, logoutRequester);
+router.put("/update/:id", isRequesterAuthenticated, updateRequester);
+router.delete("/delete/:id", isRequesterAuthenticated, deleteRequester);
+
+export default router;

@@ -3,7 +3,7 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const userSchema = new mongoose.Schema({
+const donorSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -14,26 +14,36 @@ const userSchema = new mongoose.Schema({
     required: true,
     minLength: [3, "Last Name Must Contain At Least 3 Characters!"],
   },
+  nic: {
+    type: String,
+    required: true,
+    unique: true,
+    minLength: [12, "NIC Must Contain Exact 12 Digits!"],
+    maxLength: [12, "NIC Must Contain Exact 12 Digits!"],
+  },
+  district: {
+    type: String,
+    required: true,
+  },
+  bloodGroup: {
+    type: String,
+    required: true,
+    enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+  },
   email: {
     type: String,
     required: true,
     validate: [validator.isEmail, "Please Provide A Valid Email"],
+  },
+  address: {
+    type: String,
+    required: true,
   },
   phone: {
     type: String,
     required: true,
     minLength: [10, "Phone Number Must Contain Exact 10 Digits!"],
     maxLength: [10, "Phone Number Must Contain Exact 10 Digits!"],
-  },
-  nic: {
-    type: String,
-    required: true,
-    minLength: [12, "NIC Must Contain Exact 12 Digits!"],
-    maxLength: [12, "NIC Must Contain Exact 12 Digits!"],
-  },
-  dob: {
-    type: Date,
-    required: [true, "DOB is required"],
   },
   gender: {
     type: String,
@@ -44,38 +54,33 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minLength: [8, "Password Must Contain at Least 8 Characters!"],
-    Select: false,
+    select: false,
   },
   role: {
     type: String,
-    required: true,
-    enum: ["Admin", "Patient", "Doctor"],
-  },
-  doctorDepartment: {
-    type: String,
-  },
-  docAvatar: {
-    public_id: String,
-    url: String,
+    default: "Donor",
+    enum: ["Donor"],
   },
 });
 // Hash password before saving
-userSchema.pre("save", async function (next) {
+donorSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
-    return next();
+    return next(); // Add "return" here so the hash isn't skipped without continuing
   }
   this.password = await bcrypt.hash(this.password, 10);
-  next();
+  next(); // Important: Don't forget to call next after hashing
 });
-// Compare passwords
-userSchema.methods.comparePassword = async function (enterdPassword) {
+
+//Compare passwords
+donorSchema.methods.comparePassword = async function (enterdPassword) {
   return await bcrypt.compare(enterdPassword, this.password);
 };
+
 // Generate JWT token
-userSchema.methods.generateJsonWebToken = function () {
+donorSchema.methods.generateJsonWebToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };
 
-export const User = mongoose.model("User", userSchema);
+export const Donor = mongoose.model("Donor", donorSchema);
