@@ -8,11 +8,11 @@ const Home = () => {
   return (
     <>
       <Hero
-        title={"Wellcome to Blood Bank Management System"}
+        title={"Welcome to BloodLink !  Donate Blood & Save Lives"}
         imageUrl={"/hero.png"}
       />
-      <Biography imageUrl={"/about.png"} />
-      <Departments />
+      {/* <Biography imageUrl={"/about.png"} /> */}
+      {/* <Departments /> */}
       <MessegeForm />
     </>
   );
