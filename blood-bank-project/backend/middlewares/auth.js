@@ -1,5 +1,6 @@
 import { User } from "../models/userSchema.js";
 import { Admin } from "../models/adminSchema.js";
+import { BloodBankAdmin } from "../models/bloodBankAdminSchema.js";
 import { SuperAdmin } from "../models/superAdminSchema.js";
 import { Donor } from "../models/donorSchema.js";
 import { Requester } from "../models/requesterSchema.js";
@@ -60,6 +61,25 @@ export const isSuperAdminAuthenticated = catchAsyncErrors(
 
     if (!req.superAdmin) {
       return next(new ErrorHandler("Super Admin Not Found!", 404));
+    }
+
+    next();
+  }
+);
+
+export const isBBAdminAuthenticated = catchAsyncErrors(
+  async (req, res, next) => {
+    const token = req.cookies.bloodBankAdminToken;
+
+    if (!token) {
+      return next(new ErrorHandler("Blood Bank Admin Not Authenticated!", 400));
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    req.bloodBankAdmin = await BloodBankAdmin.findById(decoded.id);
+
+    if (!req.bloodBankAdmin) {
+      return next(new ErrorHandler("Blood Bank Admin Not Found!", 404));
     }
 
     next();

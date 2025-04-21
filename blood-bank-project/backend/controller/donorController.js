@@ -79,6 +79,10 @@ export const updateDonor = catchAsyncErrors(async (req, res, next) => {
   if (!donor) {
     return next(new ErrorHandler("Donor Not Found!", 404));
   }
+  // Disallow direct password updates here
+  if (req.body.password || req.body.role) {
+    return next(new ErrorHandler("Password updates not allowed here!", 400));
+  }
   // Update donor fields from req.body
   donor = await Donor.findByIdAndUpdate(id, req.body, {
     new: true, // return the updated doc
@@ -114,6 +118,26 @@ export const getDonorDetails = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+export const getAllDonors = catchAsyncErrors(async (req, res, next) => {
+  const donors = await Donor.find().select("-password");
+  res.status(200).json({
+    success: true,
+    donors,
+  });
+});
+
+export const getDonorById = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const donor = await Donor.findById(id).select("-password");
+  if (!donor) {
+    return next(new ErrorHandler("Donor Not Found!", 404));
+  }
+  res.status(200).json({
+    success: true,
+    donor,
+  });
+});
+
 //LOGUOT DONOR
 export const logoutDonor = catchAsyncErrors(async (req, res, next) => {
   res
@@ -127,3 +151,5 @@ export const logoutDonor = catchAsyncErrors(async (req, res, next) => {
       message: "Donor Logged Out Successfully!",
     });
 });
+
+// Password Change..

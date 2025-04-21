@@ -4,7 +4,7 @@ import {
   logoutSuperAdmin,
   superAdminLogin,
   getSuperAdminDetails,
-} from "../controller/superAdminController copy.js";
+} from "../controller/superAdminController.js";
 import { isSuperAdminAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();

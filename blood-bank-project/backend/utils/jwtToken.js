@@ -4,6 +4,7 @@ export const generateToken = (user, message, statusCode, res) => {
   let cookieName = "userToken"; // fallback
   if (user.role === "SuperAdmin") cookieName = "superAdminToken";
   else if (user.role === "Admin") cookieName = "adminToken";
+  else if (user.role === "BloodBankAdmin") cookieName = "bloodBankAdminToken";
   else if (user.role === "Requester") cookieName = "requesterToken";
   else if (user.role === "Donor") cookieName = "donorToken";
   else if (user.role === "Hospital") cookieName = "hospitalToken";

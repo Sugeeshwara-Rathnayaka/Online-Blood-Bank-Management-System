@@ -79,6 +79,11 @@ export const updateRequester = catchAsyncErrors(async (req, res, next) => {
   if (!requester) {
     return next(new ErrorHandler("Requester Not Found!", 404));
   }
+  if (req.body.password || req.body.role) {
+    return next(
+      new ErrorHandler("Password or Role cannot be updated here!", 400)
+    );
+  }
   // Update requester fields from req.body
   requester = await Requester.findByIdAndUpdate(id, req.body, {
     new: true, // return the updated doc
@@ -126,4 +131,26 @@ export const logoutRequester = catchAsyncErrors(async (req, res, next) => {
       success: true,
       message: "Requester Logged Out Successfully!",
     });
+});
+
+// Get All Organizatios - Admin Only
+export const getAllRequesters = catchAsyncErrors(async (req, res, next) => {
+  const requesters = await Requester.find().select("-password");
+  res.status(200).json({
+    success: true,
+    requesters,
+  });
+});
+
+// Get Requester By ID - Admin Only
+export const getRequesterById = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const requester = await Requester.findById(id).select("-password");
+  if (!requester) {
+    return next(new ErrorHandler("Requester Not Found!", 404));
+  }
+  res.status(200).json({
+    success: true,
+    requester,
+  });
 });
