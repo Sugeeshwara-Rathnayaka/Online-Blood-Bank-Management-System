@@ -25,7 +25,6 @@ export const hospitalRegister = catchAsyncErrors(async (req, res, next) => {
     !userName ||
     !email ||
     !phone ||
-    !optionalPhone ||
     !password ||
     !confirmPassword
   ) {
@@ -76,6 +75,11 @@ export const updateHospital = catchAsyncErrors(async (req, res, next) => {
   if (!hospital) {
     return next(new ErrorHandler("Hospital Not Found!", 404));
   }
+  // Disallow direct password updates here
+  if (req.body.password || req.body.role) {
+    return next(new ErrorHandler("Password updates not allowed here!", 400));
+  }
+
   // Update hospital fields from req.body
   hospital = await Hospital.findByIdAndUpdate(id, req.body, {
     new: true, // return the updated doc
@@ -102,7 +106,7 @@ export const deleteHospital = catchAsyncErrors(async (req, res, next) => {
     message: "Hospital Deleted Successfully!",
   });
 });
-
+// GET LOGGED-IN HOSPITAL DETAILS
 export const getHospitalDetails = catchAsyncErrors(async (req, res, next) => {
   const hospital = req.hospital;
   res.status(200).json({
@@ -123,4 +127,59 @@ export const logoutHospital = catchAsyncErrors(async (req, res, next) => {
       success: true,
       message: "Hospital Logged Out Successfully!",
     });
+});
+
+//changeHospitalPassword
+export const changeHospitalPassword = catchAsyncErrors(
+  async (req, res, next) => {
+    const { oldPassword, newPassword, confirmNewPassword } = req.body;
+
+    if (!oldPassword || !newPassword || !confirmNewPassword) {
+      return next(new ErrorHandler("Please fill in all password fields!", 400));
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      return next(new ErrorHandler("New passwords do not match!", 400));
+    }
+
+    const hospital = await Hospital.findById(req.hospital._id).select(
+      "+password"
+    );
+
+    const isMatch = await hospital.comparePassword(oldPassword);
+    if (!isMatch) {
+      return next(new ErrorHandler("Old password is incorrect!", 401));
+    }
+
+    hospital.password = newPassword;
+    await hospital.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Password changed successfully!",
+      hospital,
+    });
+  }
+);
+
+// Get All Hospitals - Admin Only
+export const getAllHospitals = catchAsyncErrors(async (req, res, next) => {
+  const hospitals = await Hospital.find().select("-password");
+  res.status(200).json({
+    success: true,
+    hospitals,
+  });
+});
+
+// Get Hospital By ID - Admin Only
+export const getHospitalById = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const hospital = await Hospital.findById(id).select("-password");
+  if (!hospital) {
+    return next(new ErrorHandler("Hospital Not Found!", 404));
+  }
+  res.status(200).json({
+    success: true,
+    hospital,
+  });
 });

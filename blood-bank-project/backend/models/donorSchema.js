@@ -3,65 +3,69 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const donorSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-    minLength: [3, "First Name Must Contain At Least 3 Characters!"],
+const donorSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+      minLength: [3, "First Name Must Contain At Least 3 Characters!"],
+    },
+    lastName: {
+      type: String,
+      required: true,
+      minLength: [3, "Last Name Must Contain At Least 3 Characters!"],
+    },
+    nic: {
+      type: String,
+      required: true,
+      unique: true,
+      minLength: [12, "NIC Must Contain Exact 12 Digits!"],
+      maxLength: [12, "NIC Must Contain Exact 12 Digits!"],
+    },
+    district: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "District",
+      required: true,
+    },
+    bloodGroup: {
+      type: String,
+      required: true,
+      enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+    },
+    email: {
+      type: String,
+      required: true,
+      validate: [validator.isEmail, "Please Provide A Valid Email"],
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+      minLength: [10, "Phone Number Must Contain Exact 10 Digits!"],
+      maxLength: [10, "Phone Number Must Contain Exact 10 Digits!"],
+    },
+    gender: {
+      type: String,
+      required: true,
+      enum: ["Male", "Female"],
+    },
+    password: {
+      type: String,
+      required: true,
+      minLength: [8, "Password Must Contain at Least 8 Characters!"],
+      select: false,
+    },
+    role: {
+      type: String,
+      default: "Donor",
+      enum: ["Donor"],
+    },
   },
-  lastName: {
-    type: String,
-    required: true,
-    minLength: [3, "Last Name Must Contain At Least 3 Characters!"],
-  },
-  nic: {
-    type: String,
-    required: true,
-    unique: true,
-    minLength: [12, "NIC Must Contain Exact 12 Digits!"],
-    maxLength: [12, "NIC Must Contain Exact 12 Digits!"],
-  },
-  district: {
-    type: String,
-    required: true,
-  },
-  bloodGroup: {
-    type: String,
-    required: true,
-    enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
-  },
-  email: {
-    type: String,
-    required: true,
-    validate: [validator.isEmail, "Please Provide A Valid Email"],
-  },
-  address: {
-    type: String,
-    required: true,
-  },
-  phone: {
-    type: String,
-    required: true,
-    minLength: [10, "Phone Number Must Contain Exact 10 Digits!"],
-    maxLength: [10, "Phone Number Must Contain Exact 10 Digits!"],
-  },
-  gender: {
-    type: String,
-    required: true,
-    enum: ["Male", "Female"],
-  },
-  password: {
-    type: String,
-    required: true,
-    minLength: [8, "Password Must Contain at Least 8 Characters!"],
-    select: false,
-  },
-  role: {
-    type: String,
-    default: "Donor",
-    enum: ["Donor"],
-  },
-});
+  { timestamps: true }
+);
 // Hash password before saving
 donorSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {

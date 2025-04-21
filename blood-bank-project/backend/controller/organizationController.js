@@ -11,7 +11,7 @@ export const organizationRegister = catchAsyncErrors(async (req, res, next) => {
     presidentName,
     email,
     userName,
-    perpose,
+    purpose,
     phone,
     optionalPhone,
     password,
@@ -42,7 +42,7 @@ export const organizationRegister = catchAsyncErrors(async (req, res, next) => {
     presidentName,
     email,
     userName,
-    perpose,
+    purpose,
     phone,
     optionalPhone,
     password,
@@ -81,6 +81,10 @@ export const updateOrganization = catchAsyncErrors(async (req, res, next) => {
   if (!organization) {
     return next(new ErrorHandler("Organization Not Found!", 404));
   }
+  // Disallow direct password updates here
+  if (req.body.password || req.body.role) {
+    return next(new ErrorHandler("Password updates not allowed here!", 400));
+  }
   // Update organization fields from req.body
   organization = await Organization.findByIdAndUpdate(id, req.body, {
     new: true, // return the updated doc
@@ -118,6 +122,28 @@ export const getOrganizationDetails = catchAsyncErrors(
   }
 );
 
+// Get All Organizatios - Admin Only
+export const getAllOrganizations = catchAsyncErrors(async (req, res, next) => {
+  const organizations = await Organization.find().select("-password");
+  res.status(200).json({
+    success: true,
+    organizations,
+  });
+});
+
+// Get Organization By ID - Admin Only
+export const getOrganizationById = catchAsyncErrors(async (req, res, next) => {
+  const { id } = req.params;
+  const organization = await Organization.findById(id).select("-password");
+  if (!organization) {
+    return next(new ErrorHandler("Organization Not Found!", 404));
+  }
+  res.status(200).json({
+    success: true,
+    organization,
+  });
+});
+
 //LOGUOT Organization
 export const logoutOrganization = catchAsyncErrors(async (req, res, next) => {
   res
@@ -131,3 +157,5 @@ export const logoutOrganization = catchAsyncErrors(async (req, res, next) => {
       message: "Organization Logged Out Successfully!",
     });
 });
+
+//Password Change...

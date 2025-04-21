@@ -10,11 +10,16 @@ import messageRouter from "./router/messageRouter.js";
 import userRouter from "./router/userRouter.js";
 import appointmenrRouter from "./router/appointmenrRouter.js";
 import adminRouter from "./router/adminRouter.js";
+import bloodBankAdminRouter from "./router/bloodBankAdminRouter.js";
 import superAdminRouter from "./router/superAdminRouter.js";
 import donorRouter from "./router/donorRouter.js";
 import requesterRouter from "./router/requesterRouter.js";
 import hospitalRouter from "./router/hospitalRouter.js";
 import organizationRouter from "./router/organizationRouter.js";
+import donationRouter from "./router/donationRouter.js";
+import bloodBankHospitalRouter from "./router/bloodBankHospitalRouter.js";
+import bBHTelephoneRouter from "./router/bBHTelephoneRouter.js";
+import bloodStockRouter from "./router/bloodStockRouter.js";
 
 import bloodRouter from "./router/bloodRouter.js";
 import districtRouter from "./router/districtRouter.js";
@@ -44,12 +49,20 @@ app.use(
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/appointment", appointmenrRouter);
+
 app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/bbadmin", bloodBankAdminRouter);
 app.use("/api/v1/superAdmin", superAdminRouter);
+
 app.use("/api/v1/donor", donorRouter);
 app.use("/api/v1/requester", requesterRouter);
 app.use("/api/v1/hospital", hospitalRouter);
 app.use("/api/v1/organization", organizationRouter);
+
+app.use("/api/v1/donation", donationRouter);
+app.use("/api/v1/bbHos", bloodBankHospitalRouter);
+app.use("/api/v1/bbhTele", bBHTelephoneRouter);
+app.use("/api/v1/bloodStock", bloodStockRouter);
 
 app.use("/api/v1/blood", bloodRouter);
 app.use("/api/v1/district", districtRouter);
