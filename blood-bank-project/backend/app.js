@@ -20,6 +20,7 @@ import donationRouter from "./router/donationRouter.js";
 import bloodBankHospitalRouter from "./router/bloodBankHospitalRouter.js";
 import bBHTelephoneRouter from "./router/bBHTelephoneRouter.js";
 import bloodStockRouter from "./router/bloodStockRouter.js";
+import campaignRouter from "./router/campaignRouter.js";
 
 import bloodRouter from "./router/bloodRouter.js";
 import districtRouter from "./router/districtRouter.js";
@@ -63,6 +64,7 @@ app.use("/api/v1/donation", donationRouter);
 app.use("/api/v1/bbHos", bloodBankHospitalRouter);
 app.use("/api/v1/bbhTele", bBHTelephoneRouter);
 app.use("/api/v1/bloodStock", bloodStockRouter);
+app.use("/api/v1/campaign", campaignRouter);
 
 app.use("/api/v1/blood", bloodRouter);
 app.use("/api/v1/district", districtRouter);
