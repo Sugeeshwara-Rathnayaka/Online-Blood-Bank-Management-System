@@ -1,0 +1,189 @@
+MongoDB with Mongoose provides a wide range of methods for performing CRUD (Create, Read, Update, Delete) operations, querying, aggregating, and managing documents. Here’s a categorized list of commonly used methods:
+
+---
+
+### **1. Model Methods (Static Methods)**
+These are called on the **Model** (e.g., `User`, `Post`).
+
+| Method | Description |
+|--------|-------------|
+| `.create()` | Creates one or more documents. |
+| `.find()` | Finds documents matching a query. |
+| `.findOne()` | Finds the first document matching a query. |
+| `.findById()` | Finds a document by its `_id`. |
+| `.updateOne()` | Updates one document matching a filter. |
+| `.updateMany()` | Updates multiple documents matching a filter. |
+| `.deleteOne()` | Deletes one document matching a filter. |
+| `.deleteMany()` | Deletes multiple documents matching a filter. |
+| `.findByIdAndUpdate()` | Finds a document by `_id` and updates it. |
+| `.findByIdAndDelete()` | Finds a document by `_id` and deletes it. |
+| `.findOneAndUpdate()` | Finds and updates one document. |
+| `.findOneAndDelete()` | Finds and deletes one document. |
+| `.countDocuments()` | Counts documents matching a query. |
+| `.exists()` | Checks if at least one document matches a query. |
+| `.aggregate()` | Performs aggregation operations (like `$match`, `$group`). |
+| `.distinct()` | Returns distinct values for a field. |
+
+**Example:**
+```javascript
+await User.create({ name: "Alice" }); // Create
+const users = await User.find({ age: { $gt: 18 } }); // Find
+await User.updateOne({ name: "Alice" }, { age: 25 }); // Update
+```
+
+---
+
+### **2. Document Methods (Instance Methods)**
+These are called on an **instance of a document**.
+
+| Method | Description |
+|--------|-------------|
+| `.save()` | Saves the document to the database. |
+| `.remove()` / `.deleteOne()` | Deletes the document. |
+| `.updateOne()` | Updates the document. |
+| `.set()` | Sets a value and marks it as modified. |
+| `.get()` | Gets a value (with optional type casting). |
+| `.toJSON()` | Converts the document to a plain JS object. |
+| `.toObject()` | Converts the document to a plain JS object (without Mongoose magic). |
+| `.populate()` | Populates referenced documents. |
+| `.equals()` | Checks if another document has the same `_id`. |
+| `.isModified()` | Checks if a field was modified. |
+| `.markModified()` | Manually marks a path as modified. |
+
+**Example:**
+```javascript
+const user = new User({ name: "Bob" });
+await user.save(); // Save document
+user.age = 30;
+await user.save(); // Update document
+await user.deleteOne(); // Delete document
+```
+
+---
+
+### **3. Query Methods (Chaining Methods)**
+These are used with queries (e.g., `Model.find().where().limit()`).
+
+| Method | Description |
+|--------|-------------|
+| `.where()` | Specifies a query condition. |
+| `.limit()` | Limits the number of results. |
+| `.skip()` | Skips a number of results (pagination). |
+| `.sort()` | Sorts results (e.g., `{ age: -1 }` for descending). |
+| `.select()` | Selects specific fields (e.g., `'name email'`). |
+| `.populate()` | Populates referenced documents. |
+| `.lean()` | Returns plain JS objects (faster, no Mongoose methods). |
+| `.exec()` | Executes the query (returns a Promise). |
+| `.or()` / `.and()` | Combines query conditions. |
+| `.count()` | Counts documents (deprecated in favor of `.countDocuments()`). |
+
+**Example:**
+```javascript
+const users = await User.find()
+  .where("age").gt(18)
+  .limit(10)
+  .sort({ name: 1 })
+  .select("name email");
+```
+
+---
+
+### **4. Aggregation Methods**
+Used with `Model.aggregate()` for complex operations.
+
+| Method (Aggregation Stage) | Description |
+|----------------------------|-------------|
+| `$match` | Filters documents (like `find`). |
+| `$group` | Groups documents by a field. |
+| `$sort` | Sorts documents. |
+| `$project` | Reshapes documents (like `select`). |
+| `$lookup` | Performs a left outer join (like `.populate()`). |
+| `$unwind` | Deconstructs an array field. |
+| `$limit` / `$skip` | Pagination. |
+
+**Example:**
+```javascript
+const result = await User.aggregate([
+  { $match: { age: { $gt: 18 } } },
+  { $group: { _id: "$country", count: { $sum: 1 } } },
+]);
+```
+
+---
+
+### **5. Middleware (Hooks)**
+Methods that run before/after certain operations.
+
+| Hook | Description |
+|------|-------------|
+| `pre('save')` | Runs before saving. |
+| `post('save')` | Runs after saving. |
+| `pre('remove')` | Runs before removing. |
+| `pre('find')` | Runs before a `find` query. |
+
+**Example:**
+```javascript
+userSchema.pre('save', function(next) {
+  console.log("About to save:", this);
+  next();
+});
+```
+
+---
+
+### **6. Validation Methods**
+Used for schema validation.
+
+| Method | Description |
+|--------|-------------|
+| `.validate()` | Manually validates a document. |
+| `.isValid()` | Checks if a document is valid. |
+
+**Example:**
+```javascript
+await user.validate(); // Throws error if invalid
+```
+
+---
+
+### **7. Index Methods**
+For managing database indexes.
+
+| Method | Description |
+|--------|-------------|
+| `.createIndex()` | Creates an index. |
+| `.ensureIndexes()` | Ensures indexes exist. |
+
+**Example:**
+```javascript
+userSchema.index({ email: 1 }, { unique: true });
+```
+
+---
+
+### **8. Virtuals & Methods**
+- **Virtuals**: Computed properties (not stored in DB).
+- **Methods**: Custom document functions.
+
+**Example:**
+```javascript
+userSchema.virtual('fullName').get(function() {
+  return `${this.firstName} ${this.lastName}`;
+});
+
+userSchema.methods.sayHi = function() {
+  console.log(`Hi, I'm ${this.name}!`);
+};
+```
+
+---
+
+### **Summary**
+- **Model Methods**: `find()`, `create()`, `updateOne()`, etc.
+- **Document Methods**: `save()`, `deleteOne()`, `populate()`, etc.
+- **Query Methods**: `where()`, `limit()`, `sort()`, etc.
+- **Aggregation**: `$match`, `$group`, `$lookup`, etc.
+- **Middleware**: `pre('save')`, `post('remove')`, etc.
+- **Validation & Indexes**: `validate()`, `createIndex()`.
+
+Would you like a deeper dive into any of these methods? 🚀
