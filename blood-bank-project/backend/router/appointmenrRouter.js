@@ -8,13 +8,14 @@ import {
 import {
   isAdminAuthenticated,
   isPatientAuthenticated,
+  isSuperAdminAuthenticated,
 } from "../middlewares/auth.js";
 
 const router = express.Router();
 
 router.post("/post", isPatientAuthenticated, postAppointment);
-router.get("/getall", isAdminAuthenticated, getAllAppointments);
-router.put("/update/:id", isAdminAuthenticated, updateAppointmentStatus);
-router.delete("/delete/:id", isAdminAuthenticated, deleteAppointment);
+router.get("/getall", isSuperAdminAuthenticated, getAllAppointments);
+router.put("/update/:id", isSuperAdminAuthenticated, updateAppointmentStatus);
+router.delete("/delete/:id", isSuperAdminAuthenticated, deleteAppointment);
 
 export default router;
