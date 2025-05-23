@@ -1,8 +1,8 @@
 import React from "react";
 import Hero from "../components/Hero";
-import Biography from "../components/Biography";
-import MessegeForm from "../components/MessageForm";
-import Departments from "../components/Departments";
+// import Biography from "../components/Biography";
+// import MessegeForm from "../components/MessageForm";
+// import Departments from "../components/Departments";
 
 const Home = () => {
   return (
@@ -13,7 +13,7 @@ const Home = () => {
       />
       {/* <Biography imageUrl={"/about.png"} /> */}
       {/* <Departments /> */}
-      <MessegeForm />
+      {/* <MessegeForm /> */}
     </>
   );
 };

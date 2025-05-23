@@ -320,6 +320,10 @@ h6 {
   transition: box-shadow 0.5s;
   transition: border 0.5s;
 }
+button submit {
+  border: 1px solid #ef233c;
+  color: #ef233c;
+}
 .btn-delete {
   border: 1px solid #ef233c;
   color: #ef233c;
@@ -439,8 +443,8 @@ h6 {
     top: 10%;
   }
 }
-footer {
-  padding-bottom: 30px !important;
+/* footer {
+  padding-bottom: 20px !important;
 }
 footer hr {
   margin-bottom: 30px;
@@ -488,8 +492,8 @@ footer .content div:last-child div {
 }
 footer .content div:last-child div svg {
   font-size: 24px;
-}
-@media (max-width: 1135px) {
+} */
+/* @media (max-width: 1135px) {
   footer .content {
     flex-wrap: wrap;
     justify-content: space-between;
@@ -515,7 +519,7 @@ footer .content div:last-child div svg {
     display: flex;
     flex-direction: column;
   }
-}
+} */
 
 .departments {
   padding-top: 30px;
@@ -721,3 +725,70 @@ input[type="time"]:before {
 footer .logo-img {
   width: 100%;
 }
+
+/*footer*/
+
+footer {
+  display: flex;
+  padding: 20px 40px;
+  background-color: #2b2d42;
+  margin-bottom: 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+footer {
+  padding-bottom: 20px !important;
+}
+
+.social {
+  width: 50%;
+  align-items: center;
+  overflow: auto;
+}
+
+.icon {
+  float: right;
+}
+
+.copyright {
+  width: 50%;
+  font-size: 14px;
+  font-weight: 400;
+  color: white;
+}
+
+.social,
+.fa {
+  margin-left: 20px;
+  font-size: 22px;
+}
+@media (max-width: 1135px) {
+  footer .content {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  footer .content div,
+  footer .content div:nth-child(3) {
+    flex: none;
+    width: 340px;
+    margin-bottom: 30px;
+  }
+}
+@media (max-width: 900px) {
+  footer {
+    padding-bottom: 0 !important;
+  }
+  footer .content div,
+  footer .content div:nth-child(3) {
+    width: 100%;
+  }
+}
+@media (max-width: 390px) {
+  footer .content div:nth-child(3) ul li {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/*footer-end*/
