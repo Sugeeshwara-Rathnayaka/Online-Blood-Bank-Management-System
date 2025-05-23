@@ -16,7 +16,7 @@ const Reg_log = () => {
               </p>
             </div>
           </Link>
-          <a href="login/requester">
+          <a href="/requester/login">
             <div className="tile">
               <p className="title">
                 <FaSearchPlus className="fa" />
@@ -24,7 +24,7 @@ const Reg_log = () => {
               </p>
             </div>
           </a>
-          <a href="login/hospital">
+          <a href="/hospital/login">
             <div className="tile">
               <p className="title">
                 <FaStethoscope className="fa" />
@@ -32,7 +32,7 @@ const Reg_log = () => {
               </p>
             </div>
           </a>
-          <a href="login/organization">
+          <a href="/organization/login">
             <div className="tile">
               <p className="title">
                 <FaUsers className="fa" />

@@ -17,6 +17,6 @@ router.post("/addnew", isSuperAdminAuthenticated, addNewAdmin);
 router.put("/update/:id", isSuperAdminAuthenticated, updateAdmin);
 //router.get("/admin", isSuperAdminAuthenticated, addNewAdmin);
 router.delete("/delete/:id", isSuperAdminAuthenticated, deleteAdmin);
-router.get("/logout", isAdminAuthenticated, logoutAdmin);
+router.get("/logout", isSuperAdminAuthenticated, logoutAdmin);
 
 export default router;

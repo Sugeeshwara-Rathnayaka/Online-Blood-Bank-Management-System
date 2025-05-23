@@ -18,6 +18,13 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import DonorLogin from "./pages/donor/Login";
 import DonorRegister from "./pages/donor/Register";
+import RequesterLogin from "./pages/requester/Login";
+import RequesterRegister from "./pages/requester/Register";
+import HospitalLogin from "./pages/hospital/Login";
+import HospitalRegister from "./pages/hospital/Register";
+import OrgLogin from "./pages/organization/Login";
+import OrgRegister from "./pages/organization/Register";
+import Dashboard from "./pages/requester/Dashboard";
 
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
@@ -51,8 +58,19 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/reg_log" element={<Log_reg />} />
           <Route path="/" element={<Home />} />
+
           <Route path="/donor/login" element={<DonorLogin />} />
           <Route path="/donor/register" element={<DonorRegister />} />
+
+          <Route path="/requester/login" element={<RequesterLogin />} />
+          <Route path="/requester/register" element={<RequesterRegister />} />
+          <Route path="/requester/dashboard" element={<Dashboard />} />
+
+          <Route path="/hospital/login" element={<HospitalLogin />} />
+          <Route path="/hospital/register" element={<HospitalRegister />} />
+
+          <Route path="/organization/login" element={<OrgLogin />} />
+          <Route path="/organization/register" element={<OrgRegister />} />
         </Routes>
         <Footer />
         <ToastContainer position="top-center" autoClose={3000} />
