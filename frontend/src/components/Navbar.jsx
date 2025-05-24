@@ -23,6 +23,8 @@ import {
   Portal,
   CloseButton,
   VStack,
+  Stack,
+  Spinner,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -36,6 +38,7 @@ import { RiIdCardFill } from "react-icons/ri";
 import { useAuth } from "../contexts/AuthContext";
 import api from "../api/api";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const MotionBox = motion(Box);
 const MotionButton = motion(Button);
@@ -47,6 +50,7 @@ const Navbar = () => {
   const toast = useToast();
   const { isOpen, onToggle, onClose } = useDisclosure();
   const isMobile = useBreakpointValue({ base: true, md: false });
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // Color values
   const bg = "white";
@@ -57,21 +61,21 @@ const Navbar = () => {
   const activeBg = "red.200";
 
   const handleLogout = async () => {
+    setIsLoggingOut(true);
     try {
       await api.post("/logout");
       logout();
-      navigate("/");
       toast({
         title: "Logged out successfully",
         status: "success",
-        duration: 3000,
+        duration: 4000,
         isClosable: true,
         position: "top",
       });
+      navigate("/role-selection/login");
     } catch (error) {
       console.error("Logout failed:", error);
       logout();
-      navigate("/");
       toast({
         title: "Logged out",
         description: "You have been logged out",
@@ -80,6 +84,9 @@ const Navbar = () => {
         isClosable: true,
         position: "top",
       });
+      navigate("/");
+    } finally {
+      setIsLoggingOut(false);
     }
   };
 
@@ -100,6 +107,29 @@ const Navbar = () => {
         return user.userName; // fallback
     }
   };
+  if (isLoggingOut) {
+    return (
+      <Flex
+        minH="100vh"
+        justify="center"
+        align="center"
+        bg="white"
+        position="fixed"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        zIndex="9999"
+      >
+        <Stack spacing={4} align="center">
+          <Spinner size="xl" color="red.500" thickness="4px" speed="0.65s" />
+          <Text fontSize="lg" fontWeight="semibold">
+            Logging out...
+          </Text>
+        </Stack>
+      </Flex>
+    );
+  }
 
   return (
     <>
@@ -247,6 +277,8 @@ const Navbar = () => {
                             handleLogout();
                             onClose();
                           }}
+                          isLoading={isLoggingOut}
+                          loadingText="Logging out..."
                         >
                           Logout
                         </Button>
@@ -403,8 +435,9 @@ const Navbar = () => {
                       onClick={handleLogout}
                       _hover={{ bg: "red.50" }}
                       _focus={{ bg: "red.50" }}
+                      isDisabled={isLoggingOut}
                     >
-                      Logout
+                      {isLoggingOut ? "Logging out..." : "Logout"}
                     </MenuItem>
                   </MenuList>
                 </Menu>

@@ -3,6 +3,8 @@ import ErrorHandler from "../../middleware/errorMiddleware.js";
 import { BloodBankAdmin } from "../../models/BloodBank/BloodBankAdmin.js";
 import { BloodBankHospital } from "../../models/BloodBank/BloodBankHospital.js";
 import bcrypt from "bcryptjs";
+import { Reservation } from "../../models/DonorReservation.js";
+import { Campaign } from "../../models/Campaing.js";
 
 // ✅ UPDATE
 export const updateBBAdmin = catchAsyncErrors(async (req, res, next) => {
@@ -56,3 +58,95 @@ export const getBBAdminDetails = catchAsyncErrors(async (req, res, next) => {
     bloodBankAdmin,
   });
 });
+
+export const getAllReservations = catchAsyncErrors(async (req, res, next) => {
+  const bloodBank = req.userDetails?.bloodBankId;
+
+  if (!bloodBank) {
+    return next(
+      new ErrorHandler("Unauthorized access: Blood Bank ID not found", 401)
+    );
+  }
+
+  const reservations = await Reservation.find({
+    bloodBankId: bloodBank,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Reservations fetched successfully",
+    reservations,
+  });
+});
+
+// PUT /api/bbadmin/update-res-status/:id
+export const updateReservationStatus = catchAsyncErrors(
+  async (req, res, next) => {
+    const { id } = req.params;
+    const { flag } = req.body;
+
+    // Validate input
+    if (![0, 1, 2].includes(flag)) {
+      return next(new ErrorHandler("Invalid flag value", 400));
+    }
+
+    const reservation = await Reservation.findById(id);
+    if (!reservation) {
+      return next(new ErrorHandler("Reservation not found", 404));
+    }
+
+    reservation.flag = flag;
+    await reservation.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Reservation status updated to ${flag}`,
+      reservation,
+    });
+  }
+);
+
+export const getAllCampaignReservations = catchAsyncErrors(
+  async (req, res, next) => {
+    const bloodBank = req.userDetails?.bloodBankId;
+
+    if (!bloodBank) {
+      return next(
+        new ErrorHandler("Unauthorized access: Blood Bank ID not found", 401)
+      );
+    }
+
+    const reservations = await Campaign.find({ bloodBankId: bloodBank });
+
+    res.status(200).json({
+      success: true,
+      message: "Campaign reservations fetched successfully",
+      reservations,
+    });
+  }
+);
+
+export const updateCampaignReservationStatus = catchAsyncErrors(
+  async (req, res, next) => {
+    const { id } = req.params;
+    const { flag } = req.body;
+
+    if (![0, 1, 2].includes(flag)) {
+      return next(new ErrorHandler("Invalid flag value", 400));
+    }
+
+    const reservation = await Campaign.findById(id);
+    if (!reservation) {
+      return next(new ErrorHandler("Campaign reservation not found", 404));
+    }
+
+    reservation.flag = flag;
+    await reservation.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Campaign reservation status updated to ${flag}`,
+      reservation,
+    });
+  }
+);
