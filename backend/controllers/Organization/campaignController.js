@@ -1,10 +1,10 @@
-import { Campaign } from "../models/Campaing.js";
-import { BloodBankHospital } from "../models/BloodBank/BloodBankHospital.js";
-import { catchAsyncErrors } from "../middleware/catchAsyncErrors.js";
-import ErrorHandler from "../middleware/errorMiddleware.js";
+import { Campaign } from "../../models/Campaing.js";
+import { BloodBankHospital } from "../../models/BloodBank/BloodBankHospital.js";
+import { catchAsyncErrors } from "../../middleware/catchAsyncErrors.js";
+import ErrorHandler from "../../middleware/errorMiddleware.js";
 
 export const createCampaign = catchAsyncErrors(async (req, res, next) => {
-  const { name, location, estimate, bloodBank, date, time } = req.body;
+  const { name, location, estimate, bloodBankName, date, time } = req.body;
 
   const organizationId = req.user?._id;
   const organizationName = req.userDetails?.organizationName;
@@ -19,7 +19,7 @@ export const createCampaign = catchAsyncErrors(async (req, res, next) => {
     name,
     location,
     estimate,
-    bloodBank,
+    bloodBankName,
     date,
     time: trimmedTime,
     organizationId,
@@ -29,8 +29,8 @@ export const createCampaign = catchAsyncErrors(async (req, res, next) => {
     !campaignId ||
     !name?.trim() ||
     !location?.trim() ||
-    estimate == null ||
-    !bloodBank ||
+    !estimate == null ||
+    !bloodBankName ||
     !date ||
     !trimmedTime ||
     !organizationId
@@ -46,7 +46,9 @@ export const createCampaign = catchAsyncErrors(async (req, res, next) => {
   if (hour < 8 || hour >= 14) {
     return next(new ErrorHandler("Time must be between 08:00 and 14:00", 400));
   }
-  const hospitalExists = await BloodBankHospital.findOne({ name: bloodBank });
+  const hospitalExists = await BloodBankHospital.findOne({
+    name: bloodBankName,
+  });
   if (!hospitalExists) {
     return next(
       new ErrorHandler("Selected blood bank hospital does not exist", 404)
@@ -89,46 +91,68 @@ export const createCampaign = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get All Campaigns
+// Get Campaigns for Logged-in Organization
 export const getAllCampaigns = catchAsyncErrors(async (req, res, next) => {
-  const campaigns = await Campaign.find({ isdeleted: false })
-    .populate("bloodBankId", "name") // show only selected fields from blood bank
-    .populate("organizationId", "organizationName"); // optional fields to display
+  const organizationId = req.user?._id;
+
+  if (!organizationId) {
+    return next(new ErrorHandler("Unauthorized access", 401));
+  }
+
+  const campaigns = await Campaign.find({ organizationId })
+    .populate("bloodBankId", "name")
+    .populate("organizationId", "organizationName");
 
   res.status(200).json({
     success: true,
-    message: "All campaigns retrieved successfully",
+    message: "Campaigns for your organization retrieved successfully",
     campaigns,
   });
 });
 
-// Get Campaign by ID
-export const getCampaignById = catchAsyncErrors(async (req, res, next) => {
-  const campaign = await Campaign.findById(req.params.id); //.populate("bhospitalId organizationId");
+// Toggle Campaign Deletion Status (Soft Delete / Restore)
+export const toggleCampaignDeleteStatus = catchAsyncErrors(
+  async (req, res, next) => {
+    const { isdeleted } = req.body;
+
+    if (typeof isdeleted !== "boolean") {
+      return next(
+        new ErrorHandler(
+          "Invalid 'isdeleted' value. Must be true or false.",
+          400
+        )
+      );
+    }
+
+    const campaign = await Campaign.findByIdAndUpdate(
+      req.params.id,
+      { isdeleted },
+      { new: true }
+    );
+
+    if (!campaign) {
+      return next(new ErrorHandler("Campaign not found", 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      message: isdeleted ? "Campaign marked as deleted" : "Campaign restored",
+      campaign,
+    });
+  }
+);
+
+// Permanently Delete Campaign
+export const hardDeleteCampaign = catchAsyncErrors(async (req, res, next) => {
+  const campaign = await Campaign.findByIdAndDelete(req.params.id);
+
   if (!campaign) {
     return next(new ErrorHandler("Campaign not found", 404));
   }
-  res.status(200).json({
-    success: true,
-    message: "Campaign retrieved successfully",
-    campaign,
-  });
-});
-
-// Update Campaign
-export const updateCampaign = catchAsyncErrors(async (req, res, next) => {
-  const updated = await Campaign.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  if (!updated) {
-    return next(new ErrorHandler("Campaign not found", 404));
-  }
 
   res.status(200).json({
     success: true,
-    message: "Campaign updated successfully",
-    campaign: updated,
+    message: "Campaign permanently deleted",
   });
 });
 
@@ -159,56 +183,5 @@ export const updateCampaignFlag = catchAsyncErrors(async (req, res, next) => {
     success: true,
     message: "Campaign flag updated successfully",
     campaign: updated,
-  });
-});
-
-// Delete Campaign (Soft delete using `del` flag)
-export const deleteCampaign = catchAsyncErrors(async (req, res, next) => {
-  const campaign = await Campaign.findByIdAndUpdate(
-    req.params.id,
-    { isdeleted: true },
-    { new: true }
-  );
-  if (!campaign) {
-    return next(new ErrorHandler("Campaign not found", 404));
-  }
-
-  res.status(200).json({
-    success: true,
-    message: "Campaign marked as deleted",
-    campaign,
-  });
-});
-
-// Restore Soft-Deleted Campaign
-export const restoreCampaign = catchAsyncErrors(async (req, res, next) => {
-  const campaign = await Campaign.findByIdAndUpdate(
-    req.params.id,
-    { isdeleted: false },
-    { new: true }
-  );
-
-  if (!campaign) {
-    return next(new ErrorHandler("Campaign not found", 404));
-  }
-
-  res.status(200).json({
-    success: true,
-    message: "Campaign successfully restored",
-    campaign,
-  });
-});
-
-// Permanently Delete Campaign
-export const hardDeleteCampaign = catchAsyncErrors(async (req, res, next) => {
-  const campaign = await Campaign.findByIdAndDelete(req.params.id);
-
-  if (!campaign) {
-    return next(new ErrorHandler("Campaign not found", 404));
-  }
-
-  res.status(200).json({
-    success: true,
-    message: "Campaign permanently deleted",
   });
 });

@@ -8,7 +8,7 @@ import {
 } from "../controllers/Donor/donorController.js";
 import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
 
-import { getAllCampaigns } from "../controllers/campaignController.js";
+import { getAllCampaigns } from "../controllers/Donor/campaignController.js";
 import {
   createReservation,
   getAllReservations,
@@ -28,6 +28,7 @@ router.get("/details/:id", getDonorById);
 router.patch("/privacy", updateDonorPrivacy);
 
 router.get("/allcampaign", getAllCampaigns);
+
 router.post("/create-res", createReservation);
 router.get("/all-res", getAllReservations);
 router.delete("/delete-res/:id", deleteReservation);
