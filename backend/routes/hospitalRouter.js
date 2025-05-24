@@ -10,6 +10,7 @@ import {
   updateBloodRequestStatus,
 } from "../controllers/NormalHospital/hospitalController.js";
 import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
+import { getAllVerifiedVisibleDonors } from "../controllers/Requester/donorController.js";
 
 const router = express.Router();
 // Apply `protect` globally
@@ -26,5 +27,6 @@ router.get("/all-req", getAllBloodRequests);
 router.get("/blood-req/:id", getBloodRequestById);
 router.delete("/delete-req/:id", hardDeleteBloodRequest);
 router.put("/update-status/:id", updateBloodRequestStatus);
+router.get("/all-donors", getAllVerifiedVisibleDonors);
 
 export default router;

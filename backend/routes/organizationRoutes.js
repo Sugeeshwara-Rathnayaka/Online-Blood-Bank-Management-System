@@ -1,11 +1,14 @@
 import express from "express";
-// import {
-//   getDashboardStats,
-//   getRecentDonations,
-//   getBloodInventory,
-// } from "../controllers/organizationController.js";
-import { createCampaign } from "../controllers/campaignController.js";
-
+import {
+  createCampaign,
+  getAllCampaigns,
+  hardDeleteCampaign,
+  toggleCampaignDeleteStatus,
+} from "../controllers/Organization/campaignController.js";
+import {
+  updateOrganization,
+  deleteOrganization,
+} from "../controllers/Organization/organizationController.js";
 import { protect, authorizeRoles } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -14,11 +17,12 @@ const router = express.Router();
 router.use(protect);
 router.use(authorizeRoles("organization"));
 
-// router.get("/dashboard/stats", getDashboardStats);
-// router.get("/donations/recent", getRecentDonations);
-// router.get("/blood-inventory", getBloodInventory);
-//router.post("/campaigns", createCampaign);
+router.post("/create-camp", createCampaign);
+router.get("/all-camp", getAllCampaigns);
+router.delete("/delete-camp/:id", hardDeleteCampaign);
+router.patch("/status-camp/:id", toggleCampaignDeleteStatus);
 
-router.post("/create", createCampaign);
+router.put("/update/:id", updateOrganization);
+router.delete("/delete/:id", deleteOrganization);
 
 export default router;

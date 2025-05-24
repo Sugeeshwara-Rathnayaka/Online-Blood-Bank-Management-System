@@ -60,6 +60,7 @@ import api from "../api/api";
 import LiveClock from "../components/other/LiveClock";
 import HospitalProfile from "../components/hospital/HospitalProfile";
 import CreateBloodRequest from "../components/hospital/CreateBloodRequest";
+import VerifiedDonorsList from "../components/hospital/VerifiedDonorsList";
 
 // -------------------- Sidebar Component --------------------
 const SidebarContent = ({ onClose, setActiveSection, activeSection }) => (
@@ -397,7 +398,7 @@ const HospitalDashboard = () => {
                     colorScheme="red"
                     leftIcon={<Icon as={FiPlus} />}
                     mr={3}
-                    onClick={() => setActiveSection("hospital")}
+                    onClick={() => setActiveSection("request")}
                   >
                     New Blood Request
                   </Button>
@@ -545,9 +546,7 @@ const HospitalDashboard = () => {
                                   colorScheme="red"
                                   variant="ghost"
                                   onClick={() => openDeleteDialog(request)}
-                                  isDisabled={
-                                    !["0", "2", 0, 2].includes(request.status)
-                                  } // allow only Pending (0) and Critical (2)
+                                  isDisabled={![0, 2].includes(request.status)} // allow only Pending (0) and Critical (2)
                                 >
                                   <Icon as={FiTrash2} />
                                 </Button>
@@ -569,6 +568,7 @@ const HospitalDashboard = () => {
           )}
           {activeSection === "profile" && <HospitalProfile />}
           {activeSection === "request" && <CreateBloodRequest />}
+          {activeSection === "donors" && <VerifiedDonorsList />}
         </Box>
       </Flex>
       <AlertDialog
