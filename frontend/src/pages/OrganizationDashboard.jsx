@@ -430,8 +430,8 @@ export default function OrganizationDashboard() {
               Delete Blood Request
             </AlertDialogHeader>
             <AlertDialogBody>
-              Are you sure you want to delete this blood request? This action
-              cannot be undone.
+              Are you sure you want to delete this Campaign? This action cannot
+              be undone.
             </AlertDialogBody>
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={closeDeleteDialog}>

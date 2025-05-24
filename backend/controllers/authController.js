@@ -223,3 +223,32 @@ export const getMe = catchAsyncErrors(async (req, res, next) => {
     user, // ✅ use populated version
   });
 });
+
+// GET /me - Get current logged-in user's details
+export const getAdmin = catchAsyncErrors(async (req, res, next) => {
+  const { _id, role } = req.user;
+
+  if (!_id || !role) {
+    return next(new ErrorHandler("Unauthorized access", 401));
+  }
+
+  const normalizedRole = role.toLowerCase();
+  const Model = getModelByRole(normalizedRole);
+
+  if (!Model) {
+    return next(new ErrorHandler("Invalid role", 400));
+  }
+
+  const user = await Model.findById(_id)
+    .select("-password")
+    .populate("bloodBankId"); // ✅ fetches blooodBankId doc
+
+  if (!user) {
+    return next(new ErrorHandler("User not found", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    user, // ✅ use populated version
+  });
+});

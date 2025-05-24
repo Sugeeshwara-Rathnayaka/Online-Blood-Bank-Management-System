@@ -137,23 +137,3 @@ export const deleteReservation = catchAsyncErrors(async (req, res, next) => {
     message: "Reservation Deleted!",
   });
 });
-//BloodBAnk Admin
-export const updateReservationStatus = catchAsyncErrors(
-  async (req, res, next) => {
-    const { id } = req.params;
-    let reservation = await Reservation.findById(id);
-    if (!reservation) {
-      return next(new ErrorHandler("Reservation Not Found!", 404));
-    }
-    reservation = await Reservation.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    });
-    res.status(200).json({
-      success: true,
-      message: "Reservation Status Updated!",
-      reservation,
-    });
-  }
-);
