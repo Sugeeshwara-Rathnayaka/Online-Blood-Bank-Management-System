@@ -1,31 +1,3 @@
-// import { Link } from "react-router-dom";
-// import "../styles/Home.css";
-
-// const Home = () => {
-//   return (
-//     <div className="home-container">
-//       <header className="hero-section">
-//         <h1>Welcome to Blood Donation System</h1>
-//         <p>Save lives by donating blood or finding donors when in need</p>
-//         <div className="cta-buttons">
-//           <Link to="/login" className="cta-button primary">
-//             Login
-//           </Link>
-//           <Link to="/register" className="cta-button secondary">
-//             Register
-//           </Link>
-//         </div>
-//       </header>
-
-//       <section className="features-section">
-//         {/* Add your feature cards here */}
-//       </section>
-//     </div>
-//   );
-// };
-
-// export default Home;
-
 import {
   Box,
   Flex,
@@ -46,7 +18,7 @@ import {
 import { useAuth } from "../contexts/AuthContext";
 
 const Home = () => {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const bgGradient = useColorModeValue(
     "linear(to-r, red.50, orange.50)",
     "linear(to-r, red.900, orange.900)"

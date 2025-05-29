@@ -58,14 +58,12 @@ import {
   FiUsers,
   FiBarChart2,
   FiUser,
-  FiFileText,
   FiGrid,
   FiTrash2,
 } from "react-icons/fi";
 import { Link as RouterLink } from "react-router-dom";
 import api from "../api/api";
 import CreateBloodRequest from "../components/bloodBankAdmin/CreateBloodRequest";
-import DonorAppointments from "../components/bloodBankAdmin/DonorAppointment";
 import DonorAppointmentsTable from "../components/bloodBankAdmin/DonorAppointment";
 import CampaignReservationsTable from "../components/bloodBankAdmin/CampaignReservationsTable";
 
@@ -81,8 +79,8 @@ const SidebarContent = ({ onClose, setActiveSection, activeSection }) => (
       { icon: FiDroplet, label: "Request Blood", section: "request" },
       { icon: FiUser, label: "Donor Appointments", section: "donors" },
       { icon: FiUser, label: "Campaigns Requests", section: "orgcamps" },
-      { icon: FiUser, label: "Profile", section: "profile" },
-      { icon: FiFileText, label: "View Report", section: "report" },
+      //{ icon: FiUser, label: "Profile", section: "profile" },
+      // { icon: FiFileText, label: "View Report", section: "report" },
     ].map((item) => (
       <Button
         key={item.label}

@@ -116,7 +116,9 @@ export const getAllCampaignReservations = catchAsyncErrors(
       );
     }
 
-    const reservations = await Campaign.find({ bloodBankId: bloodBank });
+    const reservations = await Campaign.find({
+      bloodBankId: bloodBank,
+    }).populate("organizationId");
 
     res.status(200).json({
       success: true,

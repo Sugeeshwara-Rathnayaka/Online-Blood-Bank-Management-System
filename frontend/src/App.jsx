@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RoleSelection from "./components/RoleSelection";
-import AppointmentDetails from "./pages/LatestAppointment";
 import CashDonate from "./pages/CashDonation";
 import AboutUs from "./pages/AboutUs";
 import NotFound from "./pages/NotFound";
@@ -34,7 +33,6 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/role-selection" element={<RoleSelection />} />
       <Route path="/role-selection/login" element={<RoleSelection />} />
-      <Route path="/appointments/latest" element={<AppointmentDetails />} />
       <Route path="/donateUs" element={<CashDonate />} />
       <Route path="/aboutUs" element={<AboutUs />} />
       <Route path="/add-blood-bank" element={<AddBloodBankPage />} />

@@ -16,7 +16,8 @@ const orgSchema = new mongoose.Schema(
       minLength: [3, "Name Must Contain At Least 3 Characters!"],
     },
     district: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "District",
       required: true,
     },
     presidentName: {

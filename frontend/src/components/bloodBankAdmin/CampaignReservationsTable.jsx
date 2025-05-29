@@ -145,7 +145,7 @@ const CampaignReservationsTable = () => {
       <CardHeader>
         <Center>
           <Heading size="md" color="purple.600">
-            Campaign Donor Reservations
+            Campaign Requests
           </Heading>
         </Center>
       </CardHeader>
@@ -166,7 +166,8 @@ const CampaignReservationsTable = () => {
                 <Th>Campaign ID</Th>
                 <Th>Name</Th>
                 <Th>Location</Th>
-                <Th>Name</Th>
+                <Th>Estimate</Th>
+                <Th>ORG Name</Th>
                 <Th>Date</Th>
                 <Th>Time</Th>
                 <Th>Status</Th>
@@ -176,7 +177,10 @@ const CampaignReservationsTable = () => {
               {reservations.map((item) => (
                 <Tr key={item._id}>
                   <Td fontWeight="semibold">{item.campaignId}</Td>
-                  <Td>{item.donorNic}</Td>
+                  <Td>{item.name}</Td>
+                  <Td>{item.location}</Td>
+                  <Td>{item.estimate}</Td>
+                  <Td>{item.organizationId?.organizationName}</Td>
                   <Td>{new Date(item.date).toLocaleDateString("en-GB")}</Td>
                   <Td>{item.time}</Td>
                   <Td>{flagStatusBadge(item.flag, item._id)}</Td>

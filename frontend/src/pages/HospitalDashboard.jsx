@@ -74,7 +74,7 @@ const SidebarContent = ({ onClose, setActiveSection, activeSection }) => (
       { icon: FiDroplet, label: "Request Blood", section: "request" },
       { icon: FiUser, label: "Find Donors", section: "donors" },
       { icon: FiUser, label: "Profile", section: "profile" },
-      { icon: FiFileText, label: "View Report", section: "report" },
+      // { icon: FiFileText, label: "View Report", section: "report" },
     ].map((item) => (
       <Button
         key={item.label}

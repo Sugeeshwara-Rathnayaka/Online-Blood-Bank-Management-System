@@ -60,7 +60,7 @@ const SidebarContent = ({ onClose, activeSection, setActiveSection }) => (
       { icon: FiHome, label: "Blood Banks", section: "hospitals" },
       { icon: FiUsers, label: "Admins", section: "admins" },
       { icon: FiUsers, label: "Blood Donors", section: "donors" },
-      { icon: FiUser, label: "Profile", section: "profile" },
+      // { icon: FiUser, label: "Profile", section: "profile" },
     ].map((item) => (
       <Button
         key={item.label}
