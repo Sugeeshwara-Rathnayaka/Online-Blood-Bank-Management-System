@@ -148,14 +148,17 @@ npm run dev
     - Appointment calendar sync for hospitals.
 
   - **Default Login Credentials:**
-    - Donor - NIC = 200230302371 , Passwors = secure123.
-    - Requester - NIC = 200230302371 , Passwors = secure123.
-    - Hospital - UserName = SUGEE , Passwors = secure123.
-    - Organization - UserName = SUGEE , Passwors = secure123.
-    - Bloodbank Admin 1 - NIC = 200230302371 , Passwors = secure123.
-    - Bloodbank Admin 2 - NIC = 200230302372 , Passwors = secure123.
-    - Bloodbank Admin 3 - NIC = 200230302373 , Passwors = secure123.
-    - Super Admin - UserName = SUGEE , Passwors = secure123.
+    | Role              | Username/NIC | Password  |
+| ----------------- | ------------ | --------- |
+| Donor             | 200230302371 | secure123 |
+| Requester         | 200230302371 | secure123 |
+| Hospital          | SUGEE        | secure123 |
+| Organization      | SUGEE        | secure123 |
+| Bloodbank Admin 1 | 200230302371 | secure123 |
+| Bloodbank Admin 2 | 200230302372 | secure123 |
+| Bloodbank Admin 3 | 200230302373 | secure123 |
+| Super Admin       | SUGEE        | secure123 |
+
 
     - **These accounts are already created in the database for demo purposes.**
-    - **You can Login or Signup to test the functionalities using the above credentials.**
+    - **You can Login or Sign Up to explore all system features.**
