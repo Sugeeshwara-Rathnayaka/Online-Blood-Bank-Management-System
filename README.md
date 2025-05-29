@@ -118,3 +118,44 @@ npm run dev
 ### Note
 
   - **Modular Architecture:** The project follows a clean and modular folder structure separating concerns between frontend and backend, making it easy to maintain and scale.
+  - **Authentication & Role Management:**
+    - JWT-based secure login system.
+    - Role-based access (Donor, Requester, Hospital, Organization, Bloodbank Admin, Super Admin) ensures users only access permitted features.
+   
+  - **Technologies Used:**
+    - **Frontend**: React + Vite + Chakra UI for fast rendering and modern UI.
+    - **Backend**: Express.js + Node.js for scalable RESTful APIs.
+    - **Database**: MongoDB with Mongoose ORM for seamless data modeling.
+
+  - **API Integration:**
+    - RESTful API endpoints organized by role (e.g., /api/donor, /api/hospital, etc.).
+    - Middleware for route protection and structured error handling.
+
+  - **Forms**: Uses React Hook Form for efficient and validated form handling in the frontend.
+
+  - **Environment Configuration:**
+    - All sensitive variables (DB URI, JWT secrets) are handled using .env files.
+    - Example .env template provided in the project.
+   
+  - **Security Best Practices:**
+    - Passwords hashed using bcryptjs.
+    - API rate limiting and input validation can be implemented further.
+   
+  - **Future Enhancements:**
+    - Donor location-based search.
+    - Inventory alerts for low stock.
+    - SMS/email reminders for eligible donations.
+    - Appointment calendar sync for hospitals.
+
+  - **Default Login Credentials:**
+    - Donor - NIC = 200230302371 , Passwors = secure123.
+    - Requester - NIC = 200230302371 , Passwors = secure123.
+    - Hospital - UserName = SUGEE , Passwors = secure123.
+    - Organization - UserName = SUGEE , Passwors = secure123.
+    - Bloodbank Admin 1 - NIC = 200230302371 , Passwors = secure123.
+    - Bloodbank Admin 2 - NIC = 200230302372 , Passwors = secure123.
+    - Bloodbank Admin 3 - NIC = 200230302373 , Passwors = secure123.
+    - Super Admin - UserName = SUGEE , Passwors = secure123.
+
+    - **These accounts are already created in the database for demo purposes.**
+    - **You can Login or Signup to test the functionalities using the above credentials.**
