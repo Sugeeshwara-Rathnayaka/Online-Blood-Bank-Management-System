@@ -32,7 +32,7 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Usage](#usage)
-  - [Testing](#testing)
+  - [Note](#note)
 
 ---
 
@@ -112,3 +112,9 @@ npm run dev
 ```bash
 npm run dev
 ```
+
+---
+
+### Note
+
+  - **Modular Architecture:** The project follows a clean and modular folder structure separating concerns between frontend and backend, making it easy to maintain and scale.
