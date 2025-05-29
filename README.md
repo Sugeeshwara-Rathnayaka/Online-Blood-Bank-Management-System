@@ -72,4 +72,43 @@ Build Online-Blood-Bank-Management-System from the source and install dependenci
 
 ```bash
 git clone https://github.com/Sugeeshwara-Rathnayaka/Online-Blood-Bank-Management-System
+```
+Or, Extract the ZIP file
 
+2. **Navigate to the backend directory**:
+
+```bash
+cd Online-Blood-Bank-Management-System/backend
+```
+
+3. **Install the dependencies**:
+
+```bash
+npm install
+```
+
+4. **Navigate to the frontend directory**:
+
+```bash
+cd Online-Blood-Bank-Management-System/frontend
+```
+
+5. **Install the dependencies**:
+
+```bash
+npm install
+```
+
+### Usage
+
+1. **Run the backend of the project with**:
+
+```bash
+npm run dev
+```
+
+2. **Run the frontend of the project with**:
+
+```bash
+npm run dev
+```
