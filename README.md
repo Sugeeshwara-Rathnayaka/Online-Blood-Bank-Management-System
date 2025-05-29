@@ -78,25 +78,25 @@ Or, Extract the ZIP file
 2. **Navigate to the backend directory**:
 
 ```bash
-cd Online-Blood-Bank-Management-System/backend
+> cd Online-Blood-Bank-Management-System/backend
 ```
 
 3. **Install the dependencies**:
 
 ```bash
-npm install
+> npm install
 ```
 
 4. **Navigate to the frontend directory**:
 
 ```bash
-cd Online-Blood-Bank-Management-System/frontend
+> cd Online-Blood-Bank-Management-System/frontend
 ```
 
 5. **Install the dependencies**:
 
 ```bash
-npm install
+> npm install
 ```
 
 ### Usage
