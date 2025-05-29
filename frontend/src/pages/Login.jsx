@@ -143,7 +143,8 @@ const Login = () => {
         borderColor={borderColor}
       >
         <Heading as="h1" size="xl" textAlign="center" mb={8}>
-          Welcome Back
+          Welcome Back{" "}
+          {formData.role.charAt(0).toUpperCase() + formData.role.slice(1)}
         </Heading>
 
         {error && (

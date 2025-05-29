@@ -54,9 +54,13 @@ const RoleSelection = () => {
       icon: "👥",
     },
   ];
-  // // Ensure role is lowercase and URL-encoded
-  // const normalizedRole = encodeURIComponent(role.toLowerCase());
-  // navigate(`/login?role=${normalizedRole}`);
+
+  // Filter roles for register flow to exclude superadmin and bloodbankadmin
+  const visibleRoles = isLoginFlow
+    ? ROLES // show all roles on login
+    : ROLES.filter(
+        (role) => role.value !== "superadmin" && role.value !== "bloodbankadmin"
+      );
 
   const handleRoleSelect = (role) => {
     const path = isLoginFlow ? "/login" : "/register";
@@ -100,7 +104,7 @@ const RoleSelection = () => {
           gap={6}
           mb={10}
         >
-          {ROLES.map((role) => (
+          {visibleRoles.map((role) => (
             <Box
               key={role.value}
               p={6}
@@ -131,17 +135,6 @@ const RoleSelection = () => {
             </Box>
           ))}
         </Grid>
-
-        {/* <Text
-          textAlign="center"
-          mt={8}
-          color={useColorModeValue("gray.600", "gray.400")}
-        >
-          Not sure which role to select?{" "}
-          <Button as={RouterLink} to="" variant="link" colorScheme="blue">
-            Show all options
-          </Button>
-        </Text> */}
       </Box>
     </Flex>
   );

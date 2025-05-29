@@ -199,7 +199,7 @@ const RequesterDashboard = () => {
               >
                 <CardBody>
                   <Flex
-                    direction={{ base: "column", md: "row" }}
+                    direction={{ base: "column", md: "column" }}
                     justify="space-between"
                     align="center"
                   >
