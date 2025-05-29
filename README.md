@@ -106,13 +106,14 @@ Or, Extract the ZIP file
 ```bash
 npm run dev
 ```
+- Check if the Backend is running on port 5000.
 
 2. **Run the frontend of the project with**:
 
 ```bash
 npm run dev
 ```
-  - Check if the Frontend is running on port 5173
+  - Check if the Frontend is running on port 5173.
 
 ---
 
