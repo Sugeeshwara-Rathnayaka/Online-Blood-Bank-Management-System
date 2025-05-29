@@ -112,6 +112,7 @@ npm run dev
 ```bash
 npm run dev
 ```
+  - Check if the Frontend is running on port 5173
 
 ---
 
